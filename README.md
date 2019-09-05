@@ -156,4 +156,10 @@ Explanation: `td:nth-child(6)`
 $ wget -P preprocessing/classified.php.txt http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/classified.php?st=0
 $ python3 preprocessing/extract.py
 $ scrapy crawl lexi -o result.json
+$ python3 postprocessing/filter.py
 ```
+
+## Known Issues
+
+* 車
+* 、 orrcurs in words
