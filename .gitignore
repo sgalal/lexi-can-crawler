@@ -19,5 +19,7 @@ htmlcov/
 # Windows
 Thumbs.db
 
-*.json
-/preprocessing/classified.php.txt
+/data1.txt
+/data2.json
+/data3.json
+/data.json
