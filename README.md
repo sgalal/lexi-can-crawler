@@ -6,11 +6,103 @@ Crawler for Cantonese pronunciation data on Research Institute for the Humanitie
 
 See [releases page](https://github.com/sgalal/lexi_can_crawler/releases).
 
+Sample data:
+
+```json
+[
+  {
+    "ch": "一",
+    "initial": "j",
+    "rhyme": "at",
+    "tone": "1",
+    "words": [
+      "一致",
+      "統一",
+      "一枝獨秀",
+      "一般",
+      "一切",
+      "一樣",
+      "專一",
+      "劃一",
+      "一視同仁",
+      "一觸即發",
+      "一落千丈",
+      "長短不一"
+    ]
+  },
+  {
+    "ch": "丈",
+    "initial": "z",
+    "rhyme": "oeng",
+    "tone": "6",
+    "words": [
+      "丈夫",
+      "丈人",
+      "丈母",
+      "清丈",
+      "丈量",
+      "岳丈",
+      "一落千丈",
+      "丈二金剛"
+    ]
+  },
+  {
+    "ch": "丙",
+    "initial": "b",
+    "rhyme": "ing",
+    "tone": "2",
+    "words": [
+      "丙等",
+      "丙夜",
+      "付丙",
+      "丙吉問牛"
+    ]
+  }
+]
+```
+
 ## Design
 
-Get a list of all Chinese characters from the classified character table.
+**(1)** Get a list of **all Chinese characters** on that website from [classified character table](http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/classified.php?st=0)
 
-Query for each characters by Scrapy.
+**(2)** Get the result of **each character** by [Scrapy](https://scrapy.org/)
+
+**Detailed explanation:**
+
+**(1)** Get a list of all Chinese characters
+
+Download the classified character table.
+
+Decode as `big5hkscs`.
+
+Iterate through the text with the regex `<a href="search.php\?q=([%0-9A-Za-z_]+)">(.)</a>` to extract the characters and their corresponding links.
+
+**(2)** Get the result of each character
+
+Nomenclature: page &gt; data row &gt; field
+
+**2\.1** Get data rows in a single page
+
+`form > table:first-child > tr:not(:first-child)`
+
+**2\.2** Get fields in a single data row
+
+* Initial: `td:nth-child(1) > font[color="red"]::text`
+* Rhyme: `td:nth-child(1) > font[color="green"]::text`
+* Tone: `td:nth-child(1) > font[color="blue"]::text`
+* Words and explanation: `td:nth-child(6)`
+    - Words: `div[nowrap]`, `div[id$="_detial"]`
+    - Explanation: `font[color="forestgreen"]`
+
+<p style="border: 1px solid black; border-radius: 0.25em; padding: 0 0.5em;"><b>Tips:</b> When encountering decoding problem, try decoding as `big5hkscs` instead of `big5`.</p>
+
+## Run
+
+```sh
+$ python3 preprocessing.py
+$ scrapy crawl lexi -s LOG_ENABLED=False -o data3.json
+$ python3 postprocessing.py
+```
 
 ## License
 
@@ -18,33 +110,7 @@ Code for building the data is distributed under MIT license.
 
 Dictionary data follows the original license.
 
-## Tips
-
-### Decoding Problem
-
-Decode as `big5hkscs` instead of `big5`.
-
-### Extract Data
-
-#### Get data rows in a single page
-
-`form > table:first-child > tr:not(:first-child)`
-
-#### Get fields in a single data row
-
-##### Basic
-
-Initial: `td:nth-child(1) > font[color="red"]::text`
-
-Rhyme: `td:nth-child(1) > font[color="green"]::text`
-
-Tone: `td:nth-child(1) > font[color="blue"]::text`
-
-##### Patterns (incomplete)
-
-Explanation: `td:nth-child(6)`
-
-Three blocks: `div[nowrap]`, `div[id$="_detial"]`, `font[color="forestgreen"]`
+## Sample HTML
 
 (0)
 
@@ -158,7 +224,7 @@ Three blocks: `div[nowrap]`, `div[id$="_detial"]`, `font[color="forestgreen"]`
 </td>
 ```
 
-(7)
+(7) 車、媽、唳、涌、牏
 
 ![](patterns/07.png)
 
@@ -181,12 +247,4 @@ Three blocks: `div[nowrap]`, `div[id$="_detial"]`, `font[color="forestgreen"]`
         」的異讀字，多用於口語
     </font>
 </td>
-```
-
-## Run
-
-```sh
-$ python3 preprocessing.py
-$ scrapy crawl lexi -s LOG_ENABLED=False -o data3.json
-$ python3 postprocessing.py
 ```
