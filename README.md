@@ -1,8 +1,6 @@
 # lexi-can-crawler
 
-**Note: This project has been stalled. It has been superseded by [sgalal/lshk-word-list-crawler](https://github.com/sgalal/lshk-word-list-crawler).**
-
-Crawler for Cantonese pronunciation data on Research Institute for the Humanities, Faculty of Arts, The Chinese University of Hong Kong ([粵語審音配詞字庫](http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/))
+Crawler for Cantonese pronunciation data on the website of Research Institute for the Humanities, Faculty of Arts, The Chinese University of Hong Kong ([粵語審音配詞字庫](http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/))
 
 ## Result
 
