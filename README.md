@@ -1,6 +1,8 @@
 # lexi-can-crawler
 
-Crawler for Cantonese pronunciation data on the website of Research Institute for the Humanities, Faculty of Arts, The Chinese University of Hong Kong ([粵語審音配詞字庫](http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/))
+Crawler for Cantonese pronunciation data on _Chinese Character Database: With Word-formations Phonologically Disambiguated According to the Cantonese Dialect_ ([粵語審音配詞字庫](http://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/))
+
+If you are interested in a more up-to-date word list, see [rime/rime-cantonese](https://github.com/rime/rime-cantonese).
 
 ## Result
 
